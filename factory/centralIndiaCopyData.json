@@ -1,0 +1,9 @@
+{
+	"name": "centralIndiaCopyData",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d699e638-c3fb-4789-a2fa-11b3dc64a14d",
+		"tenantId": "0944aa54-8fb7-4d3e-ac38-9ad90286e356"
+	}
+}
