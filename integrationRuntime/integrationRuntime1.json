@@ -2,7 +2,7 @@
 	"name": "integrationRuntime1",
 	"properties": {
 		"type": "Managed",
-		"description": "This is first integration runtime ",
+		"description": "This is first integration runtime. It is fully managed by azure.",
 		"typeProperties": {
 			"computeProperties": {
 				"location": "South India",
