@@ -5,4 +5,10 @@ Here I have created:
             a) Azure Integration Runtime.
             b) Self-Hosted Integration Runtime.
             c) SSIS Integration Runtime.
-3. Want to create a data flow to transform the data?
+3. Created Data flow for the transformation of the data complete ETL process:
+           a) Create Data Flow:
+           b) Add Source/ Create Source two or more files
+           c) The data transformation technique is applied using GUI code-free Azure services. I used here to join the two datasets which have a similar ID column
+           d) Then I created a Source dataset for loading the transform data.
+           e) Create a data flow pipeline for grouping all activities and execute it.
+           f) The ETL process is done. Just Monitor it.
