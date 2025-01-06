@@ -1,0 +1,20 @@
+{
+	"name": "StudentAddresDataSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "StudentAddress.xlsx",
+				"container": "collegecontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"name": "StudentInfoDataSource1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "StudentInfo",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "StudentInfo.xlsx",
+				"container": "collegecontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Domain",
+				"type": "String"
+			}
+		]
+	}
+}

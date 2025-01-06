@@ -1,0 +1,34 @@
+{
+	"name": "StudentAddressDataSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "StudentAddress.xlsx",
+				"container": "collegecontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Address",
+				"type": "String"
+			},
+			{
+				"name": "Pin code",
+				"type": "String"
+			}
+		]
+	}
+}
