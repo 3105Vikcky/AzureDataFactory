@@ -35,7 +35,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"type": "Managed",
-				"description": "This is first integration runtime ",
+				"description": "This is first integration runtime. It is fully managed by azure.",
 				"typeProperties": {
 					"computeProperties": {
 						"location": "South India",
@@ -87,6 +87,110 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/StudentAddresDataSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "StudentAddress.xlsx",
+						"container": "collegecontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StudentAddressDataSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "StudentAddress.xlsx",
+						"container": "collegecontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Pin code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StudentInfoDataSource1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "StudentInfo",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "StudentInfo.xlsx",
+						"container": "collegecontainer"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Domain",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/collegecousredestination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -105,6 +209,34 @@
 						"container": "destination"
 					}
 				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/joinStudentDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
@@ -172,6 +304,130 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/InputData')]",
 				"[concat(variables('factoryId'), '/datasets/collegecousredestination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StudentInfoSource')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This Student Information Dataset.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "StudentInfoDataSource1",
+								"type": "DatasetReference"
+							},
+							"name": "StudentInfo",
+							"description": "This is first student info dataset"
+						},
+						{
+							"dataset": {
+								"referenceName": "StudentAddressDataSource",
+								"type": "DatasetReference"
+							},
+							"name": "StudentAddress",
+							"description": "This is Student address information dataset"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "joinStudentDataset",
+								"type": "DatasetReference"
+							},
+							"name": "DestinationofStudentJoin",
+							"description": "This is destination dataset to store the transform data after joining the two dataset"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> StudentInfo",
+						"source(output(",
+						"          ID as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> StudentAddress",
+						"StudentInfo, StudentAddress join(StudentInfo@ID == StudentAddress@ID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> DestinationofStudentJoin"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/StudentInfoDataSource1')]",
+				"[concat(variables('factoryId'), '/datasets/StudentAddressDataSource')]",
+				"[concat(variables('factoryId'), '/datasets/joinStudentDataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlowPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This pipeline is for extract data transform it using joins and then load it into azure blob storage",
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "StudentInfoSource",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StudentInfo": {},
+									"StudentAddress": {},
+									"DestinationofStudentJoin": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/StudentInfoSource')]"
 			]
 		}
 	]
