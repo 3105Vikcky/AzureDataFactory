@@ -1,6 +1,7 @@
 {
-	"name": "pipeline1",
+	"name": "DataFlowPipeline",
 	"properties": {
+		"description": "This pipeline is for extract data transform it",
 		"activities": [
 			{
 				"name": "Data flow1",
