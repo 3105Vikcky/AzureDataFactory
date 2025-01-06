@@ -1,7 +1,7 @@
 {
 	"name": "DataFlowPipeline",
 	"properties": {
-		"description": "This pipeline is for extract data transform it",
+		"description": "This pipeline is for extract data transform it using joins and then load it into azure blob storage",
 		"activities": [
 			{
 				"name": "Data flow1",
