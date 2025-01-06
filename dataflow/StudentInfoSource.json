@@ -24,6 +24,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "joinStudentDataset",
+						"type": "DatasetReference"
+					},
 					"name": "DestinationofStudentJoin",
 					"description": "This is destination dataset to store the transform data after joining the two dataset"
 				}
