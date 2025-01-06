@@ -1,9 +1,16 @@
 {
 	"name": "JoinStudentDestiantionDataSource",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation"
+			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
