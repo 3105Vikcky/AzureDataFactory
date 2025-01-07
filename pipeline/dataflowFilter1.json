@@ -1,7 +1,7 @@
 {
 	"name": "dataflowFilter1",
 	"properties": {
-		"description": "This is data ",
+		"description": "This is data flow filter pipeline for data transformation.",
 		"activities": [
 			{
 				"name": "DataFlowFilter",
