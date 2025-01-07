@@ -429,6 +429,135 @@
 				"[concat(variables('factoryId'), '/datasets/StudentAddressDataSource')]",
 				"[concat(variables('factoryId'), '/datasets/joinStudentDataset')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/studentFilter')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This dataflow is used for filter the student data on given condition.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "StudentInfoDataSource1",
+								"type": "DatasetReference"
+							},
+							"name": "StudenInfosource2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "filterdataset",
+								"type": "DatasetReference"
+							},
+							"name": "tranformdata2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> StudenInfosource2",
+						"StudenInfosource2 filter(ID>='3' && Domain=='Java Developer') ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> tranformdata2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/StudentInfoDataSource1')]",
+				"[concat(variables('factoryId'), '/datasets/filterdataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/filterdataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflowFilter1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is data flow filter pipeline for data transformation.",
+				"activities": [
+					{
+						"name": "DataFlowFilter",
+						"description": "This pipeline is used for data transformation using the filter.",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "studentFilter",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StudenInfosource2": {},
+									"tranformdata2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/studentFilter')]"
+			]
 		}
 	]
 }
