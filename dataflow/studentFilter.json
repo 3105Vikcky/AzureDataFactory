@@ -1,6 +1,7 @@
 {
 	"name": "studentFilter",
 	"properties": {
+		"description": "This dataflow is used for filter the student data on given condition",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
