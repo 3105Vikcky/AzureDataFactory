@@ -25,9 +25,6 @@
 			"transformations": [
 				{
 					"name": "filter1"
-				},
-				{
-					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -39,8 +36,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> StudenInfosource2",
-				"derivedColumn1 filter(ID>='3' && Domain=='Java Developer') ~> filter1",
-				"StudenInfosource2 derive(ID = ID=='2') ~> derivedColumn1",
+				"StudenInfosource2 filter(ID>='3' && Domain=='Java Developer') ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
