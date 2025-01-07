@@ -14,7 +14,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "filter1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          ID as string,",
@@ -23,7 +27,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> StudenInfosource2"
+				"     ignoreNoFilesFound: false) ~> StudenInfosource2",
+				"StudenInfosource2 filter(ERROR_FUNCTION('')) ~> filter1"
 			]
 		}
 	}
