@@ -28,7 +28,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> StudenInfosource2",
-				"StudenInfosource2 filter(ERROR_FUNCTION('')) ~> filter1"
+				"StudenInfosource2 filter(ID=='3') ~> filter1"
 			]
 		}
 	}
