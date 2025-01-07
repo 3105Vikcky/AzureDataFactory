@@ -15,7 +15,7 @@
 			],
 			"sinks": [
 				{
-					"name": "sink1"
+					"name": "tranformdata2"
 				}
 			],
 			"transformations": [
@@ -36,7 +36,7 @@
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> tranformdata2"
 			]
 		}
 	}
