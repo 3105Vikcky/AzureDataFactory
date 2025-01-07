@@ -15,6 +15,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "filterdataset",
+						"type": "DatasetReference"
+					},
 					"name": "tranformdata2"
 				}
 			],
