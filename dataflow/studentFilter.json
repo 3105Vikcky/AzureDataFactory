@@ -1,19 +1,29 @@
 {
 	"name": "studentFilter",
 	"properties": {
-		"description": "This dataflow is used for filter the student data on given condition",
+		"description": "This dataflow is used for filter the student data on given condition.",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "StudentInfoDataSource1",
+						"type": "DatasetReference"
+					},
+					"name": "StudenInfosource2"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"source(output(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Domain as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> StudenInfosource2"
 			]
 		}
 	}
