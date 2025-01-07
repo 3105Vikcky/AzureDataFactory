@@ -13,7 +13,11 @@
 					"name": "StudenInfosource2"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "filter1"
@@ -28,7 +32,11 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> StudenInfosource2",
-				"StudenInfosource2 filter(ID>='3') ~> filter1"
+				"StudenInfosource2 filter(ID>='3' && Domain=='Java Developer') ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
