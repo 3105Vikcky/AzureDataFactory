@@ -1,10 +1,11 @@
 {
-	"name": "pipeline1",
+	"name": "dataflowFilter1",
 	"properties": {
+		"description": "This is data ",
 		"activities": [
 			{
 				"name": "DataFlowFilter",
-				"description": "This pipeline is used ",
+				"description": "This pipeline is used for data transformation using the filter.",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,6 +17,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "studentFilter",
+						"type": "DataFlowReference"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
