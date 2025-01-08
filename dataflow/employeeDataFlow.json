@@ -32,6 +32,10 @@
 					"description": "This is the output data of the employee after performing duplicate remove transformation."
 				},
 				{
+					"dataset": {
+						"referenceName": "recruitmentDataDestiantion",
+						"type": "DatasetReference"
+					},
 					"name": "recruitmentdatadestination",
 					"description": "This is output data of the recruitment dataset after performing transformation."
 				}
@@ -222,6 +226,13 @@
 				"     skipDuplicateMapOutputs: true) ~> outputemployeeData",
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Domain as string,",
+				"          Address as string,",
+				"          {Pin code} as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination"
 			]
