@@ -14,7 +14,8 @@
 					"description": "This is employee information source dataset"
 				},
 				{
-					"name": "source1"
+					"name": "recruitmentData",
+					"description": "This is employeement recruitment "
 				}
 			],
 			"sinks": [
@@ -71,7 +72,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> employeedata",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"     validateSchema: false) ~> recruitmentData",
 				"employeedata aggregate(groupBy(EmpID,",
 				"          FirstName,",
 				"          LastName,",
