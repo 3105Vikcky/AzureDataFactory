@@ -15,7 +15,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          EmpID as string,",
@@ -47,7 +51,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> employeedata"
+				"     ignoreNoFilesFound: false) ~> employeedata",
+				"employeedata aggregate(groupBy(EmpID,",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
 	}
