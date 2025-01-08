@@ -75,8 +75,8 @@
 				"          LocationCode,",
 				"          RaceDesc,",
 				"          MaritalDesc,",
-				"          {} = ERROR_FUNCTION(''),",
-				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
+				"          {Performance Score},",
+				"          {Current Employee Rating})) ~> aggregate1"
 			]
 		}
 	}
