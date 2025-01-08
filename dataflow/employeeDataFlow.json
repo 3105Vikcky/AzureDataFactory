@@ -53,6 +53,9 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> employeedata",
 				"employeedata aggregate(groupBy(EmpID,",
+				"          FirstName,",
+				"          LastName,",
+				"          ExitDate,",
 				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
