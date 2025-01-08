@@ -22,6 +22,10 @@
 					"description": "This is employeement recruitment data source"
 				},
 				{
+					"dataset": {
+						"referenceName": "employeeEngagement",
+						"type": "DatasetReference"
+					},
 					"name": "employeeEngagementSurvay",
 					"description": "This is employee engagement Survey data source. "
 				}
@@ -116,8 +120,16 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> recruitmentData",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> employeeEngagementSurvay",
+				"source(output(",
+				"          {Employee ID} as string,",
+				"          {Survey Date} as string,",
+				"          {Engagement Score} as string,",
+				"          {Satisfaction Score} as string,",
+				"          {Work-Life Balance Score} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeeEngagementSurvay",
 				"employeedata aggregate(groupBy(EmpID,",
 				"          FirstName,",
 				"          LastName,",
