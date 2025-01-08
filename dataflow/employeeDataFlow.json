@@ -48,6 +48,10 @@
 					"description": "This is output data of the recruitment dataset after performing transformation."
 				},
 				{
+					"dataset": {
+						"referenceName": "employeeEngagementDestianation",
+						"type": "DatasetReference"
+					},
 					"name": "employeeEngagementDestination"
 				}
 			],
@@ -277,6 +281,13 @@
 				"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination",
 				"select3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Domain as string,",
+				"          Address as string,",
+				"          {Pin code} as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> employeeEngagementDestination"
 			]
