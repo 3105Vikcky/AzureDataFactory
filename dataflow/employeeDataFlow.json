@@ -16,7 +16,8 @@
 			],
 			"sinks": [
 				{
-					"name": "sink1"
+					"name": "outputemployeeData",
+					"description": "This is the output data of the employee after performing duplicate remove tranformation."
 				}
 			],
 			"transformations": [
@@ -84,7 +85,7 @@
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> outputemployeeData"
 			]
 		}
 	}
