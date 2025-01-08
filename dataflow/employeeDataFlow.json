@@ -76,7 +76,8 @@
 				"          RaceDesc,",
 				"          MaritalDesc,",
 				"          {Performance Score},",
-				"          {Current Employee Rating})) ~> aggregate1"
+				"          {Current Employee Rating}),",
+				"     EmpID = count()) ~> aggregate1"
 			]
 		}
 	}
