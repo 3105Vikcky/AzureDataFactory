@@ -66,6 +66,10 @@
 				"          TerminationType,",
 				"          TerminationDescription,",
 				"          DepartmentType,",
+				"          Division,",
+				"          DOB,",
+				"          State,",
+				"          {} = ERROR_FUNCTION(''),",
 				"          {} = ERROR_FUNCTION(''),",
 				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
