@@ -12,6 +12,9 @@
 					},
 					"name": "employeedata",
 					"description": "This is employee information source dataset"
+				},
+				{
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -67,6 +70,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> employeedata",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1",
 				"employeedata aggregate(groupBy(EmpID,",
 				"          FirstName,",
 				"          LastName,",
