@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "aggregate1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -88,7 +91,37 @@
 				"          {Performance Score},",
 				"          {Current Employee Rating}),",
 				"     count = count()) ~> aggregate1",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"aggregate1 select(mapColumn(",
+				"          EmpID,",
+				"          FirstName,",
+				"          LastName,",
+				"          StartDate,",
+				"          ExitDate,",
+				"          Title,",
+				"          Supervisor,",
+				"          ADEmail,",
+				"          BusinessUnit,",
+				"          EmployeeStatus,",
+				"          EmployeeType,",
+				"          PayZone,",
+				"          EmployeeClassificationType,",
+				"          TerminationType,",
+				"          TerminationDescription,",
+				"          DepartmentType,",
+				"          Division,",
+				"          DOB,",
+				"          State,",
+				"          JobFunctionDescription,",
+				"          GenderCode,",
+				"          LocationCode,",
+				"          RaceDesc,",
+				"          MaritalDesc,",
+				"          {Performance Score},",
+				"          {Current Employee Rating}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ID as string,",
