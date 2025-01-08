@@ -1,0 +1,30 @@
+{
+	"name": "EmployeeDataTransformPipeline",
+	"properties": {
+		"description": "Pipeline for transform the employee data for analytics purpose",
+		"activities": [
+			{
+				"name": "EmployeeDataflow",
+				"description": "This is employee dataflow for transform the employee data and load it into container.",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
