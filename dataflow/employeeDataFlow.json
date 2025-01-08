@@ -1,12 +1,13 @@
 {
-	"name": "dataflow1",
+	"name": "employeeDataFlow",
 	"properties": {
+		"description": "This is the employee dataflow for transforming ",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"name": "employeedata",
-					"description": "This is employee source dataset"
+					"description": "This is employee information source dataset"
 				}
 			],
 			"sinks": [],
