@@ -17,7 +17,7 @@
 			"sinks": [
 				{
 					"name": "outputemployeeData",
-					"description": "This is the output data of the employee after performing duplicate remove tranformation."
+					"description": "This is the output data of the employee after performing duplicate remove transformation."
 				}
 			],
 			"transformations": [
@@ -85,7 +85,33 @@
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> outputemployeeData"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          EmpID,",
+				"          FirstName,",
+				"          LastName,",
+				"          ExitDate,",
+				"          Supervisor,",
+				"          ADEmail,",
+				"          BusinessUnit,",
+				"          EmployeeStatus,",
+				"          EmployeeType,",
+				"          PayZone,",
+				"          EmployeeClassificationType,",
+				"          TerminationType,",
+				"          TerminationDescription,",
+				"          DepartmentType,",
+				"          Division,",
+				"          DOB,",
+				"          State,",
+				"          JobFunctionDescription,",
+				"          GenderCode,",
+				"          LocationCode,",
+				"          RaceDesc,",
+				"          MaritalDesc,",
+				"          {Performance Score},",
+				"          {Current Employee Rating}",
+				"     )) ~> outputemployeeData"
 			]
 		}
 	}
