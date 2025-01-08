@@ -71,13 +71,12 @@
 				"          State,",
 				"          JobFunctionDescription,",
 				"          GenderCode,",
-				"          {} = ERROR_FUNCTION(''),",
 				"          LocationCode,",
 				"          RaceDesc,",
 				"          MaritalDesc,",
 				"          {Performance Score},",
 				"          {Current Employee Rating}),",
-				"     EmpID = count()) ~> aggregate1"
+				"     count = count()) ~> aggregate1"
 			]
 		}
 	}
