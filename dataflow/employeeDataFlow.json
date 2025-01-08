@@ -76,7 +76,7 @@
 				"          MaritalDesc,",
 				"          {Performance Score},",
 				"          {Current Employee Rating}),",
-				"     count = count()) ~> aggregate1"
+				"     EmpID = count()) ~> aggregate1"
 			]
 		}
 	}
