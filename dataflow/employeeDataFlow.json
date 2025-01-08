@@ -33,7 +33,7 @@
 				},
 				{
 					"name": "recruitmentdatadestination",
-					"description": "This is output data of the re"
+					"description": "This is output data of the recruitment dataset after performing transformation."
 				}
 			],
 			"transformations": [
