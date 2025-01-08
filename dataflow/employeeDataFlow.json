@@ -66,6 +66,7 @@
 				"          LastName,",
 				"          StartDate,",
 				"          ExitDate,",
+				"          Title,",
 				"          Supervisor,",
 				"          ADEmail,",
 				"          BusinessUnit,",
