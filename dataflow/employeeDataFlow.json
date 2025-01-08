@@ -175,6 +175,7 @@
 				"          {Zip Code},",
 				"          Country,",
 				"          {Education Level},",
+				"          {Years of Experience},",
 				"          {Desired Salary},",
 				"          {Job Title},",
 				"          Status),",
