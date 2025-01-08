@@ -1,7 +1,7 @@
 {
 	"name": "employeeDataFlow",
 	"properties": {
-		"description": "This is the employee dataflow for transforming ",
+		"description": "This is the employee dataflow for transforming employee related data so we can use it for analytics.",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
