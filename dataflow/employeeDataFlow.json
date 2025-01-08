@@ -64,6 +64,7 @@
 				"employeedata aggregate(groupBy(EmpID,",
 				"          FirstName,",
 				"          LastName,",
+				"          StartDate,",
 				"          ExitDate,",
 				"          Supervisor,",
 				"          ADEmail,",
