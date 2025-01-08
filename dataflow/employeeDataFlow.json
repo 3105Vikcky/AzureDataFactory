@@ -15,7 +15,7 @@
 				},
 				{
 					"name": "recruitmentData",
-					"description": "This is employeement recruitment "
+					"description": "This is employeement recruitment data source"
 				}
 			],
 			"sinks": [
