@@ -20,6 +20,9 @@
 					},
 					"name": "recruitmentData",
 					"description": "This is employeement recruitment data source"
+				},
+				{
+					"name": "employeeEngagementSurvay"
 				}
 			],
 			"sinks": [
@@ -112,6 +115,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> recruitmentData",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> employeeEngagementSurvay",
 				"employeedata aggregate(groupBy(EmpID,",
 				"          FirstName,",
 				"          LastName,",
