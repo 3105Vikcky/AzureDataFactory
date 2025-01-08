@@ -69,7 +69,12 @@
 				"          Division,",
 				"          DOB,",
 				"          State,",
+				"          JobFunctionDescription,",
+				"          GenderCode,",
 				"          {} = ERROR_FUNCTION(''),",
+				"          LocationCode,",
+				"          RaceDesc,",
+				"          MaritalDesc,",
 				"          {} = ERROR_FUNCTION(''),",
 				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
