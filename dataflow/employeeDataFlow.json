@@ -22,7 +22,8 @@
 					"description": "This is employeement recruitment data source"
 				},
 				{
-					"name": "employeeEngagementSurvay"
+					"name": "employeeEngagementSurvay",
+					"description": "This is employee engagement Survey data source. "
 				}
 			],
 			"sinks": [
