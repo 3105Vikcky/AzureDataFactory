@@ -41,6 +41,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate2"
 				}
 			],
 			"scriptLines": [
@@ -158,6 +161,21 @@
 				"select1 derive(ExitDate = iifNull(ExitDate, \"NA\", ExitDate)\r",
 				",",
 				"          TerminationDescription = iifNull(TerminationDescription, \"UnKnown\", TerminationDescription)) ~> derivedColumn1",
+				"recruitmentData aggregate(groupBy({Applicant ID},",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate2",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
