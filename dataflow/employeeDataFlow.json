@@ -6,6 +6,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "employee_data",
+						"type": "DatasetReference"
+					},
 					"name": "employeedata",
 					"description": "This is employee information source dataset"
 				}
@@ -13,8 +17,37 @@
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> employeedata"
+				"source(output(",
+				"          EmpID as string,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          StartDate as string,",
+				"          ExitDate as string,",
+				"          Title as string,",
+				"          Supervisor as string,",
+				"          ADEmail as string,",
+				"          BusinessUnit as string,",
+				"          EmployeeStatus as string,",
+				"          EmployeeType as string,",
+				"          PayZone as string,",
+				"          EmployeeClassificationType as string,",
+				"          TerminationType as string,",
+				"          TerminationDescription as string,",
+				"          DepartmentType as string,",
+				"          Division as string,",
+				"          DOB as string,",
+				"          State as string,",
+				"          JobFunctionDescription as string,",
+				"          GenderCode as string,",
+				"          LocationCode as string,",
+				"          RaceDesc as string,",
+				"          MaritalDesc as string,",
+				"          {Performance Score} as string,",
+				"          {Current Employee Rating} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeedata"
 			]
 		}
 	}

@@ -1,0 +1,128 @@
+{
+	"name": "employee_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "employee_data.csv",
+				"container": "collegecontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "EmpID",
+				"type": "String"
+			},
+			{
+				"name": "FirstName",
+				"type": "String"
+			},
+			{
+				"name": "LastName",
+				"type": "String"
+			},
+			{
+				"name": "StartDate",
+				"type": "String"
+			},
+			{
+				"name": "ExitDate",
+				"type": "String"
+			},
+			{
+				"name": "Title",
+				"type": "String"
+			},
+			{
+				"name": "Supervisor",
+				"type": "String"
+			},
+			{
+				"name": "ADEmail",
+				"type": "String"
+			},
+			{
+				"name": "BusinessUnit",
+				"type": "String"
+			},
+			{
+				"name": "EmployeeStatus",
+				"type": "String"
+			},
+			{
+				"name": "EmployeeType",
+				"type": "String"
+			},
+			{
+				"name": "PayZone",
+				"type": "String"
+			},
+			{
+				"name": "EmployeeClassificationType",
+				"type": "String"
+			},
+			{
+				"name": "TerminationType",
+				"type": "String"
+			},
+			{
+				"name": "TerminationDescription",
+				"type": "String"
+			},
+			{
+				"name": "DepartmentType",
+				"type": "String"
+			},
+			{
+				"name": "Division",
+				"type": "String"
+			},
+			{
+				"name": "DOB",
+				"type": "String"
+			},
+			{
+				"name": "State",
+				"type": "String"
+			},
+			{
+				"name": "JobFunctionDescription",
+				"type": "String"
+			},
+			{
+				"name": "GenderCode",
+				"type": "String"
+			},
+			{
+				"name": "LocationCode",
+				"type": "String"
+			},
+			{
+				"name": "RaceDesc",
+				"type": "String"
+			},
+			{
+				"name": "MaritalDesc",
+				"type": "String"
+			},
+			{
+				"name": "Performance Score",
+				"type": "String"
+			},
+			{
+				"name": "Current Employee Rating",
+				"type": "String"
+			}
+		]
+	}
+}
