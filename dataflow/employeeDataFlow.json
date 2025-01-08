@@ -32,7 +32,8 @@
 					"description": "This is the output data of the employee after performing duplicate remove transformation."
 				},
 				{
-					"name": "sink1"
+					"name": "recruitmentdatadestination",
+					"description": "This is output data of the re"
 				}
 			],
 			"transformations": [
@@ -222,7 +223,7 @@
 				"select2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination"
 			]
 		}
 	}
