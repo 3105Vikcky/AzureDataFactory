@@ -59,7 +59,12 @@
 				"          Supervisor,",
 				"          ADEmail,",
 				"          BusinessUnit,",
-				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
+				"          EmployeeStatus,",
+				"          EmployeeType,",
+				"          PayZone,",
+				"          EmployeeClassificationType,",
+				"          TerminationType,",
+				"          TerminationDescription)) ~> aggregate1"
 			]
 		}
 	}
