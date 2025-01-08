@@ -14,6 +14,10 @@
 					"description": "This is employee information source dataset"
 				},
 				{
+					"dataset": {
+						"referenceName": "recruitmentData",
+						"type": "DatasetReference"
+					},
 					"name": "recruitmentData",
 					"description": "This is employeement recruitment data source"
 				}
@@ -71,8 +75,29 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> employeedata",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> recruitmentData",
+				"source(output(",
+				"          {Applicant ID} as string,",
+				"          {Application Date} as string,",
+				"          {First Name} as string,",
+				"          {Last Name} as string,",
+				"          Gender as string,",
+				"          {Date of Birth} as string,",
+				"          {Phone Number} as string,",
+				"          Email as string,",
+				"          Address as string,",
+				"          City as string,",
+				"          State as string,",
+				"          {Zip Code} as string,",
+				"          Country as string,",
+				"          {Education Level} as string,",
+				"          {Years of Experience} as string,",
+				"          {Desired Salary} as string,",
+				"          {Job Title} as string,",
+				"          Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> recruitmentData",
 				"employeedata aggregate(groupBy(EmpID,",
 				"          FirstName,",
 				"          LastName,",
