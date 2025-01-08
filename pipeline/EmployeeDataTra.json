@@ -1,10 +1,10 @@
 {
-	"name": "pipeline1",
+	"name": "EmployeeDataTra",
 	"properties": {
 		"activities": [
 			{
 				"name": "EmployeeDataflow",
-				"description": "This is ",
+				"description": "This is employee dataflow for transform the employee data and load it into container.",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
