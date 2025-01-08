@@ -30,6 +30,9 @@
 					},
 					"name": "outputemployeeData",
 					"description": "This is the output data of the employee after performing duplicate remove transformation."
+				},
+				{
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -44,6 +47,9 @@
 				},
 				{
 					"name": "aggregate2"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -180,6 +186,28 @@
 				"          {Job Title},",
 				"          Status),",
 				"     count = count()) ~> aggregate2",
+				"aggregate2 select(mapColumn(",
+				"          {Applicant ID},",
+				"          {Application Date},",
+				"          {First Name},",
+				"          {Last Name},",
+				"          Gender,",
+				"          {Date of Birth},",
+				"          {Phone Number},",
+				"          Email,",
+				"          Address,",
+				"          City,",
+				"          State,",
+				"          {Zip Code},",
+				"          Country,",
+				"          {Education Level},",
+				"          {Years of Experience},",
+				"          {Desired Salary},",
+				"          {Job Title},",
+				"          Status",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -190,7 +218,11 @@
 				"          {Pin code} as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> outputemployeeData"
+				"     skipDuplicateMapOutputs: true) ~> outputemployeeData",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
