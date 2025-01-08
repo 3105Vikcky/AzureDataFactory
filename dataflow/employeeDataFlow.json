@@ -16,6 +16,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "OutputEmpData",
+						"type": "DatasetReference"
+					},
 					"name": "outputemployeeData",
 					"description": "This is the output data of the employee after performing duplicate remove transformation."
 				}
@@ -84,6 +88,13 @@
 				"     count = count()) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Domain as string,",
+				"          Address as string,",
+				"          {Pin code} as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
