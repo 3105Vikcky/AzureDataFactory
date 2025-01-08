@@ -63,6 +63,9 @@
 				},
 				{
 					"name": "select2"
+				},
+				{
+					"name": "aggregate3"
 				}
 			],
 			"scriptLines": [
@@ -229,6 +232,11 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
+				"employeeEngagementSurvay aggregate(groupBy({Employee ID},",
+				"          {Survey Date},",
+				"          {Engagement Score},",
+				"          {Satisfaction Score},",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate3",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
