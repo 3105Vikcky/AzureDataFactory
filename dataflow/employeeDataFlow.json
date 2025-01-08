@@ -64,7 +64,10 @@
 				"          PayZone,",
 				"          EmployeeClassificationType,",
 				"          TerminationType,",
-				"          TerminationDescription)) ~> aggregate1"
+				"          TerminationDescription,",
+				"          DepartmentType,",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
 	}
