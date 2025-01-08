@@ -46,6 +46,9 @@
 					},
 					"name": "recruitmentdatadestination",
 					"description": "This is output data of the recruitment dataset after performing transformation."
+				},
+				{
+					"name": "employeeEngagementDestination"
 				}
 			],
 			"transformations": [
@@ -66,6 +69,9 @@
 				},
 				{
 					"name": "aggregate3"
+				},
+				{
+					"name": "select3"
 				}
 			],
 			"scriptLines": [
@@ -238,6 +244,15 @@
 				"          {Satisfaction Score},",
 				"          {Work-Life Balance Score}),",
 				"     count = count()) ~> aggregate3",
+				"aggregate3 select(mapColumn(",
+				"          {Employee ID},",
+				"          {Survey Date},",
+				"          {Engagement Score},",
+				"          {Satisfaction Score},",
+				"          {Work-Life Balance Score}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -259,7 +274,11 @@
 				"          {Pin code} as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination"
+				"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination",
+				"select3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> employeeEngagementDestination"
 			]
 		}
 	}
