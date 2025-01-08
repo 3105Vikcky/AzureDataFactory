@@ -126,7 +126,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 derive(ExitDate = iifNull(ExitDate, \"NA\", ExitDate)\r",
 				",",
-				"          column1 = ERROR_FUNCTION('')) ~> derivedColumn1",
+				"          TerminationDescription = ERROR_FUNCTION('')) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
