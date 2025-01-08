@@ -129,6 +129,54 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflowFilter1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is data flow filter pipeline for data transformation.",
+				"activities": [
+					{
+						"name": "DataFlowFilter",
+						"description": "This pipeline is used for data transformation using the filter.",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "studentFilter",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StudenInfosource2": {},
+									"tranformdata2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/studentFilter')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/InputData')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -147,6 +195,55 @@
 						"container": "collegecontainer"
 					}
 				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OutputEmpData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Domain",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Pin code",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
@@ -281,6 +378,167 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/employee_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "employee_data.csv",
+						"container": "collegecontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "EmpID",
+						"type": "String"
+					},
+					{
+						"name": "FirstName",
+						"type": "String"
+					},
+					{
+						"name": "LastName",
+						"type": "String"
+					},
+					{
+						"name": "StartDate",
+						"type": "String"
+					},
+					{
+						"name": "ExitDate",
+						"type": "String"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "Supervisor",
+						"type": "String"
+					},
+					{
+						"name": "ADEmail",
+						"type": "String"
+					},
+					{
+						"name": "BusinessUnit",
+						"type": "String"
+					},
+					{
+						"name": "EmployeeStatus",
+						"type": "String"
+					},
+					{
+						"name": "EmployeeType",
+						"type": "String"
+					},
+					{
+						"name": "PayZone",
+						"type": "String"
+					},
+					{
+						"name": "EmployeeClassificationType",
+						"type": "String"
+					},
+					{
+						"name": "TerminationType",
+						"type": "String"
+					},
+					{
+						"name": "TerminationDescription",
+						"type": "String"
+					},
+					{
+						"name": "DepartmentType",
+						"type": "String"
+					},
+					{
+						"name": "Division",
+						"type": "String"
+					},
+					{
+						"name": "DOB",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "JobFunctionDescription",
+						"type": "String"
+					},
+					{
+						"name": "GenderCode",
+						"type": "String"
+					},
+					{
+						"name": "LocationCode",
+						"type": "String"
+					},
+					{
+						"name": "RaceDesc",
+						"type": "String"
+					},
+					{
+						"name": "MaritalDesc",
+						"type": "String"
+					},
+					{
+						"name": "Performance Score",
+						"type": "String"
+					},
+					{
+						"name": "Current Employee Rating",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/filterdataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/joinStudentDataset')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -303,6 +561,156 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/recruitmentData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "recruitment_data.csv",
+						"container": "collegecontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Applicant ID",
+						"type": "String"
+					},
+					{
+						"name": "Application Date",
+						"type": "String"
+					},
+					{
+						"name": "First Name",
+						"type": "String"
+					},
+					{
+						"name": "Last Name",
+						"type": "String"
+					},
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Date of Birth",
+						"type": "String"
+					},
+					{
+						"name": "Phone Number",
+						"type": "String"
+					},
+					{
+						"name": "Email",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "Zip Code",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Education Level",
+						"type": "String"
+					},
+					{
+						"name": "Years of Experience",
+						"type": "String"
+					},
+					{
+						"name": "Desired Salary",
+						"type": "String"
+					},
+					{
+						"name": "Job Title",
+						"type": "String"
+					},
+					{
+						"name": "Status",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/recruitmentDataDestiantion')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Domain",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Pin code",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
@@ -431,6 +839,312 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/employeeDataFlow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is the employee dataflow for transforming employee related data so we can use it for analytics.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "employee_data",
+								"type": "DatasetReference"
+							},
+							"name": "employeedata",
+							"description": "This is employee information source dataset"
+						},
+						{
+							"dataset": {
+								"referenceName": "recruitmentData",
+								"type": "DatasetReference"
+							},
+							"name": "recruitmentData",
+							"description": "This is employeement recruitment data source"
+						},
+						{
+							"dataset": {
+								"referenceName": "employeeEngagement",
+								"type": "DatasetReference"
+							},
+							"name": "employeeEngagementSurvay",
+							"description": "This is employee engagement Survey data source. "
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OutputEmpData",
+								"type": "DatasetReference"
+							},
+							"name": "outputemployeeData",
+							"description": "This is the output data of the employee after performing duplicate remove transformation."
+						},
+						{
+							"dataset": {
+								"referenceName": "recruitmentDataDestiantion",
+								"type": "DatasetReference"
+							},
+							"name": "recruitmentdatadestination",
+							"description": "This is output data of the recruitment dataset after performing transformation."
+						},
+						{
+							"dataset": {
+								"referenceName": "employeeEngagementDestianation",
+								"type": "DatasetReference"
+							},
+							"name": "employeeEngagementDestination"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate2"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "aggregate3"
+						},
+						{
+							"name": "select3"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          EmpID as string,",
+						"          FirstName as string,",
+						"          LastName as string,",
+						"          StartDate as string,",
+						"          ExitDate as string,",
+						"          Title as string,",
+						"          Supervisor as string,",
+						"          ADEmail as string,",
+						"          BusinessUnit as string,",
+						"          EmployeeStatus as string,",
+						"          EmployeeType as string,",
+						"          PayZone as string,",
+						"          EmployeeClassificationType as string,",
+						"          TerminationType as string,",
+						"          TerminationDescription as string,",
+						"          DepartmentType as string,",
+						"          Division as string,",
+						"          DOB as string,",
+						"          State as string,",
+						"          JobFunctionDescription as string,",
+						"          GenderCode as string,",
+						"          LocationCode as string,",
+						"          RaceDesc as string,",
+						"          MaritalDesc as string,",
+						"          {Performance Score} as string,",
+						"          {Current Employee Rating} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> employeedata",
+						"source(output(",
+						"          {Applicant ID} as string,",
+						"          {Application Date} as string,",
+						"          {First Name} as string,",
+						"          {Last Name} as string,",
+						"          Gender as string,",
+						"          {Date of Birth} as string,",
+						"          {Phone Number} as string,",
+						"          Email as string,",
+						"          Address as string,",
+						"          City as string,",
+						"          State as string,",
+						"          {Zip Code} as string,",
+						"          Country as string,",
+						"          {Education Level} as string,",
+						"          {Years of Experience} as string,",
+						"          {Desired Salary} as string,",
+						"          {Job Title} as string,",
+						"          Status as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> recruitmentData",
+						"source(output(",
+						"          {Employee ID} as string,",
+						"          {Survey Date} as string,",
+						"          {Engagement Score} as string,",
+						"          {Satisfaction Score} as string,",
+						"          {Work-Life Balance Score} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> employeeEngagementSurvay",
+						"employeedata aggregate(groupBy(EmpID,",
+						"          FirstName,",
+						"          LastName,",
+						"          StartDate,",
+						"          ExitDate,",
+						"          Title,",
+						"          Supervisor,",
+						"          ADEmail,",
+						"          BusinessUnit,",
+						"          EmployeeStatus,",
+						"          EmployeeType,",
+						"          PayZone,",
+						"          EmployeeClassificationType,",
+						"          TerminationType,",
+						"          TerminationDescription,",
+						"          DepartmentType,",
+						"          Division,",
+						"          DOB,",
+						"          State,",
+						"          JobFunctionDescription,",
+						"          GenderCode,",
+						"          LocationCode,",
+						"          RaceDesc,",
+						"          MaritalDesc,",
+						"          {Performance Score},",
+						"          {Current Employee Rating}),",
+						"     count = count()) ~> aggregate1",
+						"aggregate1 select(mapColumn(",
+						"          EmpID,",
+						"          FirstName,",
+						"          LastName,",
+						"          StartDate,",
+						"          ExitDate,",
+						"          Title,",
+						"          Supervisor,",
+						"          ADEmail,",
+						"          BusinessUnit,",
+						"          EmployeeStatus,",
+						"          EmployeeType,",
+						"          PayZone,",
+						"          EmployeeClassificationType,",
+						"          TerminationType,",
+						"          TerminationDescription,",
+						"          DepartmentType,",
+						"          Division,",
+						"          DOB,",
+						"          State,",
+						"          JobFunctionDescription,",
+						"          GenderCode,",
+						"          LocationCode,",
+						"          RaceDesc,",
+						"          MaritalDesc,",
+						"          {Performance Score},",
+						"          {Current Employee Rating}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 derive(ExitDate = iifNull(ExitDate, \"NA\", ExitDate),",
+						"          TerminationDescription = iifNull(TerminationDescription, \"UnKnown\", TerminationDescription)) ~> derivedColumn1",
+						"recruitmentData aggregate(groupBy({Applicant ID},",
+						"          {Application Date},",
+						"          {First Name},",
+						"          {Last Name},",
+						"          Gender,",
+						"          {Date of Birth},",
+						"          {Phone Number},",
+						"          Email,",
+						"          Address,",
+						"          City,",
+						"          State,",
+						"          {Zip Code},",
+						"          Country,",
+						"          {Education Level},",
+						"          {Years of Experience},",
+						"          {Desired Salary},",
+						"          {Job Title},",
+						"          Status),",
+						"     count = count()) ~> aggregate2",
+						"aggregate2 select(mapColumn(",
+						"          {Applicant ID},",
+						"          {Application Date},",
+						"          {First Name},",
+						"          {Last Name},",
+						"          Gender,",
+						"          {Date of Birth},",
+						"          Email,",
+						"          Address,",
+						"          City,",
+						"          State,",
+						"          {Zip Code},",
+						"          Country,",
+						"          {Education Level},",
+						"          {Years of Experience},",
+						"          {Desired Salary},",
+						"          {Job Title},",
+						"          Status",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"employeeEngagementSurvay aggregate(groupBy({Employee ID},",
+						"          {Survey Date},",
+						"          {Engagement Score},",
+						"          {Satisfaction Score},",
+						"          {Work-Life Balance Score}),",
+						"     count = count()) ~> aggregate3",
+						"aggregate3 select(mapColumn(",
+						"          {Employee ID},",
+						"          {Survey Date},",
+						"          {Engagement Score},",
+						"          {Satisfaction Score},",
+						"          {Work-Life Balance Score}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select3",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> outputemployeeData",
+						"select2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination",
+						"select3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> employeeEngagementDestination"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/employee_data')]",
+				"[concat(variables('factoryId'), '/datasets/recruitmentData')]",
+				"[concat(variables('factoryId'), '/datasets/employeeEngagement')]",
+				"[concat(variables('factoryId'), '/datasets/OutputEmpData')]",
+				"[concat(variables('factoryId'), '/datasets/recruitmentDataDestiantion')]",
+				"[concat(variables('factoryId'), '/datasets/employeeEngagementDestianation')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/studentFilter')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -484,7 +1198,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/filterdataset')]",
+			"name": "[concat(parameters('factoryName'), '/employeeEngagement')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -497,7 +1211,56 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "output",
+						"fileName": "employee_engagement_survey_data.csv",
+						"container": "collegecontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "Survey Date",
+						"type": "String"
+					},
+					{
+						"name": "Engagement Score",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction Score",
+						"type": "String"
+					},
+					{
+						"name": "Work-Life Balance Score",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/employeeEngagementDestianation')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
 						"container": "destination"
 					},
 					"columnDelimiter": ",",
@@ -505,22 +1268,43 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Domain",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Pin code",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflowFilter1')]",
+			"name": "[concat(parameters('factoryName'), '/EmployeeDataTransformPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "This is data flow filter pipeline for data transformation.",
+				"description": "Pipeline for transform the employee data for analytics purpose",
 				"activities": [
 					{
-						"name": "DataFlowFilter",
-						"description": "This pipeline is used for data transformation using the filter.",
+						"name": "EmployeeDataflow",
+						"description": "This is employee dataflow for transform the employee data and load it into container.",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -533,12 +1317,16 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "studentFilter",
+								"referenceName": "employeeDataFlow",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"StudenInfosource2": {},
-									"tranformdata2": {}
+									"employeedata": {},
+									"recruitmentData": {},
+									"employeeEngagementSurvay": {},
+									"outputemployeeData": {},
+									"recruitmentdatadestination": {},
+									"employeeEngagementDestination": {}
 								}
 							},
 							"staging": {},
@@ -556,7 +1344,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/studentFilter')]"
+				"[concat(variables('factoryId'), '/dataflows/employeeDataFlow')]"
 			]
 		}
 	]
