@@ -11,7 +11,13 @@
 				}
 			],
 			"scriptLines": [
-				"input(order: 0,",
+				"input(output(",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
+				"     ),",
+				"     order: 0,",
 				"     allowSchemaDrift: true) ~> input1"
 			]
 		}
