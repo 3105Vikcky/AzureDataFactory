@@ -17,7 +17,7 @@
 			"sinks": [
 				{
 					"name": "asmStudentdestination",
-					"description": "After perform some transforsmation the "
+					"description": "After perform some transformation the load the dataset in destination file. "
 				}
 			],
 			"transformations": [
