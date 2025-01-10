@@ -49,7 +49,7 @@
 				"          grade,",
 				"          city),",
 				"     count = count()) ~> aggregate1",
-				"aggregate1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"asmStudent, aggregate1 join(asmStudent@Full_name == aggregate1@Full_name,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
