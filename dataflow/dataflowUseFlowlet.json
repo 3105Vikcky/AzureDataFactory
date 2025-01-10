@@ -87,7 +87,7 @@
 				"          city",
 				"     ),",
 				"     composition: 'flowlet1') ~> flowlet1@(output1)",
-				"flowlet1@output1, flowlet1Use@output1 join(flowlet1@output1@Full_name == flowlet1Use@output1@Full_name,",
+				"flowlet1@output1, asmStudent join(flowlet1@output1@Full_name == flowlet1Use@output1@Full_name,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
