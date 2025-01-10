@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"name": "asmStudent",
-					"description": "This is asm student data "
+					"description": "This is ASM college student data. "
 				}
 			],
 			"sinks": [],
