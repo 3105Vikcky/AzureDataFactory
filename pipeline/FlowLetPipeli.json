@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "FlowLetPipeli",
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "FlowletPipelineForCollege",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -15,6 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflowUseFlowlet",
+						"type": "DataFlowReference"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
