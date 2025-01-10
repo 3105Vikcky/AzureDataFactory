@@ -1,0 +1,52 @@
+{
+	"name": "removeDuplicateFlowlet",
+	"properties": {
+		"description": "This is the remove Duplicate flowlate",
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "asmStudent"
+				},
+				{
+					"name": "asmStudentdestination"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          rollno as string,",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
+				"     ),",
+				"     order: 0,",
+				"     allowSchemaDrift: true) ~> asmStudent",
+				"asmStudent aggregate(groupBy(rollno,",
+				"          Full_name,",
+				"          marks,",
+				"          grade,",
+				"          city),",
+				"     count = count()) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          rollno,",
+				"          Full_name,",
+				"          marks,",
+				"          grade,",
+				"          city",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 output() ~> asmStudentdestination"
+			]
+		}
+	}
+}
