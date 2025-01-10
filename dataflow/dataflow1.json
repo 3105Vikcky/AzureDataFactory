@@ -32,10 +32,11 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
 				"asmStudent aggregate(groupBy(rollno,",
-				"          {} = ERROR_FUNCTION(''),",
-				"          {} = ERROR_FUNCTION(''),",
-				"          {} = ERROR_FUNCTION(''),",
-				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
+				"          Full_name,",
+				"          marks,",
+				"          grade,",
+				"          city),",
+				"     count = count()) ~> aggregate1"
 			]
 		}
 	}
