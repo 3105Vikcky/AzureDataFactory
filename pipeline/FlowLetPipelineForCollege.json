@@ -7,7 +7,14 @@
 				"name": "FlowletPipelineForCollege",
 				"description": "Created a pipeline called FlowletPipelineForCollege for data transform activity.",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Notebook1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
