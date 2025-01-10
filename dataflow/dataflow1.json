@@ -109,7 +109,7 @@
 				"          grade,",
 				"          city",
 				"     )) ~> sink1",
-				"pratibhaclgStudent sink(allowSchemaDrift: true,",
+				"flowlet1@output1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Employee ID} as string,",
