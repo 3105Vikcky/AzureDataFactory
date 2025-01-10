@@ -17,6 +17,9 @@
 					"name": "asmStudent"
 				},
 				{
+					"name": "input1"
+				},
+				{
 					"name": "asmStudentdestination"
 				}
 			],
@@ -30,6 +33,8 @@
 				"     ),",
 				"     order: 0,",
 				"     allowSchemaDrift: true) ~> asmStudent",
+				"input(order: 1,",
+				"     allowSchemaDrift: true) ~> input1",
 				"asmStudent aggregate(groupBy(rollno,",
 				"          Full_name,",
 				"          marks,",
