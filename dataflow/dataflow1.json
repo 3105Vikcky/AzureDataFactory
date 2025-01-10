@@ -27,9 +27,6 @@
 			"transformations": [
 				{
 					"name": "aggregate1"
-				},
-				{
-					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -49,8 +46,7 @@
 				"          grade,",
 				"          city),",
 				"     count = count()) ~> aggregate1",
-				"aggregate1 filter(ERROR_FUNCTION('')) ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          rollno as string,",
