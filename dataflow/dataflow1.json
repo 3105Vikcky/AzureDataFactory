@@ -16,12 +16,7 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "asmstudentdataflow",
-						"type": "DatasetReference"
-					},
-					"name": "asmStudentdestination",
-					"description": "After perform some transformation the load the dataset in destination file. "
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -40,30 +35,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
-				"asmStudent aggregate(groupBy(rollno,",
-				"          Full_name,",
+				"asmStudent aggregate(groupBy(Full_name,",
 				"          marks,",
 				"          grade,",
 				"          city),",
 				"     count = count()) ~> aggregate1",
-				"asmStudent sink(allowSchemaDrift: true,",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          rollno as string,",
-				"          Full_name as string,",
-				"          marks as string,",
-				"          grade as string,",
-				"          city as string",
-				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          rollno,",
-				"          Full_name,",
-				"          marks,",
-				"          grade,",
-				"          city",
-				"     )) ~> asmStudentdestination"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
