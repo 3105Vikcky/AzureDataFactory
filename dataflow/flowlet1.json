@@ -12,10 +12,9 @@
 			],
 			"scriptLines": [
 				"input(output(",
+				"          rollno as string,",
 				"          Full_name as string,",
-				"          marks as string,",
-				"          grade as string,",
-				"          city as string",
+				"          {} as string",
 				"     ),",
 				"     order: 0,",
 				"     allowSchemaDrift: true) ~> input1"
