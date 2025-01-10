@@ -25,7 +25,12 @@
 			],
 			"transformations": [
 				{
-					"name": "aggregate1"
+					"name": "flowlet1Use",
+					"description": "This flowlet having logic ",
+					"flowlet": {
+						"referenceName": "flowlet1",
+						"type": "DataFlowReference"
+					}
 				}
 			],
 			"scriptLines": [
@@ -39,12 +44,15 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
-				"asmStudent aggregate(groupBy(Full_name,",
+				"asmStudent compose(mapColumn(",
+				"          rollno,",
+				"          Full_name,",
 				"          marks,",
 				"          grade,",
-				"          city),",
-				"     count = count()) ~> aggregate1",
-				"aggregate1 sink(allowSchemaDrift: true,",
+				"          city",
+				"     ),",
+				"     composition: 'flowlet1') ~> flowlet1Use@(temporary)",
+				"flowlet1Use@temporary sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          rollno as string,",
