@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "dataflowUseFlowlet",
 	"properties": {
 		"description": "This is the asm student data want to remove duplicate name entry item from it.",
 		"type": "MappingDataFlow",
