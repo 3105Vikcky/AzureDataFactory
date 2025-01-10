@@ -65,6 +65,110 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FlowLetPipeli')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "FlowletPipelineForCollege",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowUseFlowlet",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"asmStudent": {},
+									"pratibhaclgStudent": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Flowlet Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowUseFlowlet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FlowLetPipelineForCollege')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This pipeline uses dataflow flowlet for reuse the same transformation on same data. To reduce the task of the developer.",
+				"activities": [
+					{
+						"name": "FlowletPipelineForCollege",
+						"description": "Created a pipeline called FlowletPipelineForCollege for data transform activity.",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowUseFlowlet",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"asmStudent": {},
+									"pratibhaclgStudent": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Flowlet Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowUseFlowlet')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/collegecourse')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -174,6 +278,107 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/studentFilter')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "pratibhastudent.csv",
+						"container": "flowletcontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "rollno",
+						"type": "String"
+					},
+					{
+						"name": "Full_name",
+						"type": "String"
+					},
+					{
+						"name": "marks",
+						"type": "String"
+					},
+					{
+						"name": "grade",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					},
+					{
+						"name": "DOB",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "Survey Date",
+						"type": "String"
+					},
+					{
+						"name": "Engagement Score",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction Score",
+						"type": "String"
+					},
+					{
+						"name": "Work-Life Balance Score",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
 			]
 		},
 		{
@@ -354,6 +559,55 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/asmstudentdataflow')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "asmstudent.csv",
+						"container": "flowletcontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "rollno",
+						"type": "String"
+					},
+					{
+						"name": "Full_name",
+						"type": "String"
+					},
+					{
+						"name": "marks",
+						"type": "String"
+					},
+					{
+						"name": "grade",
+						"type": "String"
+					},
+					{
+						"name": "city",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/collegecousredestination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -372,6 +626,104 @@
 						"container": "destination"
 					}
 				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/employeeEngagement')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "employee_engagement_survey_data.csv",
+						"container": "collegecontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "Survey Date",
+						"type": "String"
+					},
+					{
+						"name": "Engagement Score",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction Score",
+						"type": "String"
+					},
+					{
+						"name": "Work-Life Balance Score",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/employeeEngagementDestianation')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Domain",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Pin code",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
@@ -554,6 +906,32 @@
 						"type": "AzureBlobStorageLocation",
 						"folderPath": "output",
 						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pratibhaclgstudent')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -836,6 +1214,142 @@
 				"[concat(variables('factoryId'), '/datasets/StudentInfoDataSource1')]",
 				"[concat(variables('factoryId'), '/datasets/StudentAddressDataSource')]",
 				"[concat(variables('factoryId'), '/datasets/joinStudentDataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflowUseFlowlet')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is the asm student data want to remove duplicate name entry item from it.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "asmstudentdataflow",
+								"type": "DatasetReference"
+							},
+							"name": "asmStudent",
+							"description": "This is ASM college student data. "
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "pratibhaclgStudent"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "asmstudentdataflow",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flowlet1Use",
+							"flowlet": {
+								"referenceName": "flowlet1",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
+						},
+						{
+							"name": "flowlet1",
+							"flowlet": {
+								"referenceName": "flowlet1",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> asmStudent",
+						"source(output(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string,",
+						"          DOB as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> pratibhaclgStudent",
+						"asmStudent compose(mapColumn(",
+						"          rollno,",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city,",
+						"          DOB = rollno",
+						"     ),",
+						"     composition: 'flowlet1') ~> flowlet1Use@(output1)",
+						"pratibhaclgStudent compose(mapColumn(",
+						"          rollno,",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city",
+						"     ),",
+						"     composition: 'flowlet1') ~> flowlet1@(output1)",
+						"flowlet1Use@output1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city",
+						"     )) ~> sink1",
+						"flowlet1@output1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Employee ID} as string,",
+						"          {Survey Date} as string,",
+						"          {Engagement Score} as string,",
+						"          {Satisfaction Score} as string,",
+						"          {Work-Life Balance Score} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/flowlet1')]",
+				"[concat(variables('factoryId'), '/datasets/asmstudentdataflow')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
 			]
 		},
 		{
@@ -1145,6 +1659,61 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/flowlet1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Flowlet",
+				"typeProperties": {
+					"sources": [],
+					"sinks": [],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "input1"
+						},
+						{
+							"name": "output1"
+						}
+					],
+					"scriptLines": [
+						"input(output(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string,",
+						"          DOB as string",
+						"     ),",
+						"     order: 0,",
+						"     allowSchemaDrift: true) ~> input1",
+						"input1 aggregate(groupBy(Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city,",
+						"          DOB),",
+						"     count = count()) ~> aggregate1",
+						"aggregate1 select(mapColumn(",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city,",
+						"          DOB",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 output() ~> output1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/studentFilter')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1195,156 +1764,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/StudentInfoDataSource1')]",
 				"[concat(variables('factoryId'), '/datasets/filterdataset')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/employeeEngagement')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage_college_course",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "employee_engagement_survey_data.csv",
-						"container": "collegecontainer"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Employee ID",
-						"type": "String"
-					},
-					{
-						"name": "Survey Date",
-						"type": "String"
-					},
-					{
-						"name": "Engagement Score",
-						"type": "String"
-					},
-					{
-						"name": "Satisfaction Score",
-						"type": "String"
-					},
-					{
-						"name": "Work-Life Balance Score",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/employeeEngagementDestianation')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage_college_course",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "output",
-						"container": "destination"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ID",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Domain",
-						"type": "String"
-					},
-					{
-						"name": "Address",
-						"type": "String"
-					},
-					{
-						"name": "Pin code",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_college_course')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EmployeeDataTransformPipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Pipeline for transform the employee data for analytics purpose",
-				"activities": [
-					{
-						"name": "EmployeeDataflow",
-						"description": "This is employee dataflow for transform the employee data and load it into container.",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "employeeDataFlow",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"employeedata": {},
-									"recruitmentData": {},
-									"employeeEngagementSurvay": {},
-									"outputemployeeData": {},
-									"recruitmentdatadestination": {},
-									"employeeEngagementDestination": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/employeeDataFlow')]"
 			]
 		}
 	]

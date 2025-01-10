@@ -13,6 +13,668 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/recruitmentDataDestiantion')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_college_course",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "destination"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Domain",
+						"type": "String"
+					},
+					{
+						"name": "Address",
+						"type": "String"
+					},
+					{
+						"name": "Pin code",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/collegecourse')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is my first pipeline which copies data from source storage account to sink (destination) storage account.\n",
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "InputData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "collegecousredestination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StudentInfoSource')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This Student Information Dataset.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "StudentInfoDataSource1",
+								"type": "DatasetReference"
+							},
+							"name": "StudentInfo",
+							"description": "This is first student info dataset"
+						},
+						{
+							"dataset": {
+								"referenceName": "StudentAddressDataSource",
+								"type": "DatasetReference"
+							},
+							"name": "StudentAddress",
+							"description": "This is Student address information dataset"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "joinStudentDataset",
+								"type": "DatasetReference"
+							},
+							"name": "DestinationofStudentJoin",
+							"description": "This is destination dataset to store the transform data after joining the two dataset"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> StudentInfo",
+						"source(output(",
+						"          ID as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> StudentAddress",
+						"StudentInfo, StudentAddress join(StudentInfo@ID == StudentAddress@ID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> DestinationofStudentJoin"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflowUseFlowlet')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is the asm student data want to remove duplicate name entry item from it.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "asmstudentdataflow",
+								"type": "DatasetReference"
+							},
+							"name": "asmStudent",
+							"description": "This is ASM college student data. "
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "pratibhaclgStudent"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "asmstudentdataflow",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flowlet1Use",
+							"flowlet": {
+								"referenceName": "flowlet1",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
+						},
+						{
+							"name": "flowlet1",
+							"flowlet": {
+								"referenceName": "flowlet1",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> asmStudent",
+						"source(output(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string,",
+						"          DOB as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> pratibhaclgStudent",
+						"asmStudent compose(mapColumn(",
+						"          rollno,",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city,",
+						"          DOB = rollno",
+						"     ),",
+						"     composition: 'flowlet1') ~> flowlet1Use@(output1)",
+						"pratibhaclgStudent compose(mapColumn(",
+						"          rollno,",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city",
+						"     ),",
+						"     composition: 'flowlet1') ~> flowlet1@(output1)",
+						"flowlet1Use@output1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          rollno as string,",
+						"          Full_name as string,",
+						"          marks as string,",
+						"          grade as string,",
+						"          city as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          Full_name,",
+						"          marks,",
+						"          grade,",
+						"          city",
+						"     )) ~> sink1",
+						"flowlet1@output1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Employee ID} as string,",
+						"          {Survey Date} as string,",
+						"          {Engagement Score} as string,",
+						"          {Satisfaction Score} as string,",
+						"          {Work-Life Balance Score} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/employeeDataFlow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This is the employee dataflow for transforming employee related data so we can use it for analytics.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "employee_data",
+								"type": "DatasetReference"
+							},
+							"name": "employeedata",
+							"description": "This is employee information source dataset"
+						},
+						{
+							"dataset": {
+								"referenceName": "recruitmentData",
+								"type": "DatasetReference"
+							},
+							"name": "recruitmentData",
+							"description": "This is employeement recruitment data source"
+						},
+						{
+							"dataset": {
+								"referenceName": "employeeEngagement",
+								"type": "DatasetReference"
+							},
+							"name": "employeeEngagementSurvay",
+							"description": "This is employee engagement Survey data source. "
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OutputEmpData",
+								"type": "DatasetReference"
+							},
+							"name": "outputemployeeData",
+							"description": "This is the output data of the employee after performing duplicate remove transformation."
+						},
+						{
+							"dataset": {
+								"referenceName": "recruitmentDataDestiantion",
+								"type": "DatasetReference"
+							},
+							"name": "recruitmentdatadestination",
+							"description": "This is output data of the recruitment dataset after performing transformation."
+						},
+						{
+							"dataset": {
+								"referenceName": "employeeEngagementDestianation",
+								"type": "DatasetReference"
+							},
+							"name": "employeeEngagementDestination"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate2"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "aggregate3"
+						},
+						{
+							"name": "select3"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          EmpID as string,",
+						"          FirstName as string,",
+						"          LastName as string,",
+						"          StartDate as string,",
+						"          ExitDate as string,",
+						"          Title as string,",
+						"          Supervisor as string,",
+						"          ADEmail as string,",
+						"          BusinessUnit as string,",
+						"          EmployeeStatus as string,",
+						"          EmployeeType as string,",
+						"          PayZone as string,",
+						"          EmployeeClassificationType as string,",
+						"          TerminationType as string,",
+						"          TerminationDescription as string,",
+						"          DepartmentType as string,",
+						"          Division as string,",
+						"          DOB as string,",
+						"          State as string,",
+						"          JobFunctionDescription as string,",
+						"          GenderCode as string,",
+						"          LocationCode as string,",
+						"          RaceDesc as string,",
+						"          MaritalDesc as string,",
+						"          {Performance Score} as string,",
+						"          {Current Employee Rating} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> employeedata",
+						"source(output(",
+						"          {Applicant ID} as string,",
+						"          {Application Date} as string,",
+						"          {First Name} as string,",
+						"          {Last Name} as string,",
+						"          Gender as string,",
+						"          {Date of Birth} as string,",
+						"          {Phone Number} as string,",
+						"          Email as string,",
+						"          Address as string,",
+						"          City as string,",
+						"          State as string,",
+						"          {Zip Code} as string,",
+						"          Country as string,",
+						"          {Education Level} as string,",
+						"          {Years of Experience} as string,",
+						"          {Desired Salary} as string,",
+						"          {Job Title} as string,",
+						"          Status as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> recruitmentData",
+						"source(output(",
+						"          {Employee ID} as string,",
+						"          {Survey Date} as string,",
+						"          {Engagement Score} as string,",
+						"          {Satisfaction Score} as string,",
+						"          {Work-Life Balance Score} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> employeeEngagementSurvay",
+						"employeedata aggregate(groupBy(EmpID,",
+						"          FirstName,",
+						"          LastName,",
+						"          StartDate,",
+						"          ExitDate,",
+						"          Title,",
+						"          Supervisor,",
+						"          ADEmail,",
+						"          BusinessUnit,",
+						"          EmployeeStatus,",
+						"          EmployeeType,",
+						"          PayZone,",
+						"          EmployeeClassificationType,",
+						"          TerminationType,",
+						"          TerminationDescription,",
+						"          DepartmentType,",
+						"          Division,",
+						"          DOB,",
+						"          State,",
+						"          JobFunctionDescription,",
+						"          GenderCode,",
+						"          LocationCode,",
+						"          RaceDesc,",
+						"          MaritalDesc,",
+						"          {Performance Score},",
+						"          {Current Employee Rating}),",
+						"     count = count()) ~> aggregate1",
+						"aggregate1 select(mapColumn(",
+						"          EmpID,",
+						"          FirstName,",
+						"          LastName,",
+						"          StartDate,",
+						"          ExitDate,",
+						"          Title,",
+						"          Supervisor,",
+						"          ADEmail,",
+						"          BusinessUnit,",
+						"          EmployeeStatus,",
+						"          EmployeeType,",
+						"          PayZone,",
+						"          EmployeeClassificationType,",
+						"          TerminationType,",
+						"          TerminationDescription,",
+						"          DepartmentType,",
+						"          Division,",
+						"          DOB,",
+						"          State,",
+						"          JobFunctionDescription,",
+						"          GenderCode,",
+						"          LocationCode,",
+						"          RaceDesc,",
+						"          MaritalDesc,",
+						"          {Performance Score},",
+						"          {Current Employee Rating}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 derive(ExitDate = iifNull(ExitDate, \"NA\", ExitDate),",
+						"          TerminationDescription = iifNull(TerminationDescription, \"UnKnown\", TerminationDescription)) ~> derivedColumn1",
+						"recruitmentData aggregate(groupBy({Applicant ID},",
+						"          {Application Date},",
+						"          {First Name},",
+						"          {Last Name},",
+						"          Gender,",
+						"          {Date of Birth},",
+						"          {Phone Number},",
+						"          Email,",
+						"          Address,",
+						"          City,",
+						"          State,",
+						"          {Zip Code},",
+						"          Country,",
+						"          {Education Level},",
+						"          {Years of Experience},",
+						"          {Desired Salary},",
+						"          {Job Title},",
+						"          Status),",
+						"     count = count()) ~> aggregate2",
+						"aggregate2 select(mapColumn(",
+						"          {Applicant ID},",
+						"          {Application Date},",
+						"          {First Name},",
+						"          {Last Name},",
+						"          Gender,",
+						"          {Date of Birth},",
+						"          Email,",
+						"          Address,",
+						"          City,",
+						"          State,",
+						"          {Zip Code},",
+						"          Country,",
+						"          {Education Level},",
+						"          {Years of Experience},",
+						"          {Desired Salary},",
+						"          {Job Title},",
+						"          Status",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"employeeEngagementSurvay aggregate(groupBy({Employee ID},",
+						"          {Survey Date},",
+						"          {Engagement Score},",
+						"          {Satisfaction Score},",
+						"          {Work-Life Balance Score}),",
+						"     count = count()) ~> aggregate3",
+						"aggregate3 select(mapColumn(",
+						"          {Employee ID},",
+						"          {Survey Date},",
+						"          {Engagement Score},",
+						"          {Satisfaction Score},",
+						"          {Work-Life Balance Score}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select3",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> outputemployeeData",
+						"select2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> recruitmentdatadestination",
+						"select3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string,",
+						"          Address as string,",
+						"          {Pin code} as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> employeeEngagementDestination"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/recruitmentDataDestiantion')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/studentFilter')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This dataflow is used for filter the student data on given condition.",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "StudentInfoDataSource1",
+								"type": "DatasetReference"
+							},
+							"name": "StudenInfosource2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "filterdataset",
+								"type": "DatasetReference"
+							},
+							"name": "tranformdata2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ID as string,",
+						"          Name as string,",
+						"          Domain as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> StudenInfosource2",
+						"StudenInfosource2 filter(ID>='3' && Domain=='Java Developer') ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> tranformdata2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DataFlowPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -56,7 +718,113 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/StudentInfoSource')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FlowLetPipeli')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "FlowletPipelineForCollege",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowUseFlowlet",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"asmStudent": {},
+									"pratibhaclgStudent": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Flowlet Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowUseFlowlet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FlowLetPipelineForCollege')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "This pipeline uses dataflow flowlet for reuse the same transformation on same data. To reduce the task of the developer.",
+				"activities": [
+					{
+						"name": "FlowletPipelineForCollege",
+						"description": "Created a pipeline called FlowletPipelineForCollege for data transform activity.",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowUseFlowlet",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"asmStudent": {},
+									"pratibhaclgStudent": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Flowlet Pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowUseFlowlet')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflowFilter1')]",
@@ -102,57 +870,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EmployeeDataTransformPipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Pipeline for transform the employee data for analytics purpose",
-				"activities": [
-					{
-						"name": "EmployeeDataflow",
-						"description": "This is employee dataflow for transform the employee data and load it into container.",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "employeeDataFlow",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"employeedata": {},
-									"recruitmentData": {},
-									"employeeEngagementSurvay": {},
-									"outputemployeeData": {},
-									"recruitmentdatadestination": {},
-									"employeeEngagementDestination": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/studentFilter')]"
+			]
 		}
 	]
 }
