@@ -5,7 +5,7 @@
 		"activities": [
 			{
 				"name": "FlowletPipelineForCollege",
-				"description": "Created a pipeline called ",
+				"description": "Created a pipeline called FlowletPipelineForCollege for data transform activity.",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
