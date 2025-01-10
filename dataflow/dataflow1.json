@@ -14,6 +14,10 @@
 					"description": "This is ASM college student data. "
 				},
 				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
 					"name": "pratibhaclgStudent"
 				}
 			],
@@ -24,12 +28,22 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"name": "sink2"
 				}
 			],
 			"transformations": [
 				{
 					"name": "flowlet1Use",
 					"description": "This flowlet having logic to remove duplicate data",
+					"flowlet": {
+						"referenceName": "flowlet1",
+						"type": "DataFlowReference"
+					}
+				},
+				{
+					"name": "flowlet1",
 					"flowlet": {
 						"referenceName": "flowlet1",
 						"type": "DataFlowReference"
@@ -47,8 +61,17 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> pratibhaclgStudent",
+				"source(output(",
+				"          rollno as string,",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string,",
+				"          DOB as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> pratibhaclgStudent",
 				"asmStudent compose(mapColumn(",
 				"          rollno,",
 				"          Full_name,",
@@ -57,6 +80,14 @@
 				"          city",
 				"     ),",
 				"     composition: 'flowlet1') ~> flowlet1Use@(output1)",
+				"pratibhaclgStudent compose(mapColumn(",
+				"          rollno,",
+				"          Full_name,",
+				"          marks,",
+				"          grade,",
+				"          city",
+				"     ),",
+				"     composition: 'flowlet1') ~> flowlet1@(output1)",
 				"flowlet1Use@output1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -73,7 +104,11 @@
 				"          marks,",
 				"          grade,",
 				"          city",
-				"     )) ~> sink1"
+				"     )) ~> sink1",
+				"flowlet1@output1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
