@@ -27,9 +27,6 @@
 			"transformations": [
 				{
 					"name": "aggregate1"
-				},
-				{
-					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -49,12 +46,7 @@
 				"          grade,",
 				"          city),",
 				"     count = count()) ~> aggregate1",
-				"asmStudent, aggregate1 join(asmStudent@Full_name == aggregate1@Full_name,",
-				"     joinType:'inner',",
-				"     matchType:'exact',",
-				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 sink(allowSchemaDrift: true,",
+				"asmStudent sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          rollno as string,",
