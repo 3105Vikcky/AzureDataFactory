@@ -1,10 +1,11 @@
 {
 	"name": "FlowLetPipelineForCollege",
 	"properties": {
-		"description": "This pipeline uses dataflow flowlet for reuse the same tranfromation on same data. To reduce the task of",
+		"description": "This pipeline uses dataflow flowlet for reuse the same transformation on same data. To reduce the task of the developer.",
 		"activities": [
 			{
 				"name": "FlowletPipelineForCollege",
+				"description": "Created a pipeline called ",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
