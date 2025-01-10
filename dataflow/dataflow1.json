@@ -16,6 +16,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "asmstudentdataflow",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -42,8 +46,21 @@
 				"     count = count()) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          rollno as string,",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Full_name,",
+				"          marks,",
+				"          grade,",
+				"          city",
+				"     )) ~> sink1"
 			]
 		}
 	}
