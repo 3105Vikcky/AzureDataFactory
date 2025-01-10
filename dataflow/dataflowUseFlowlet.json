@@ -23,10 +23,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedText2",
-						"type": "DatasetReference"
-					},
 					"name": "sink2"
 				}
 			],
@@ -87,20 +83,13 @@
 				"          city",
 				"     ),",
 				"     composition: 'flowlet1') ~> flowlet1@(output1)",
-				"flowlet1@output1, asmStudent join(flowlet1@output1@Full_name == flowlet1Use@output1@Full_name,",
+				"flowlet1@output1, flowlet1Use@output1 join(flowlet1@output1@Full_name == flowlet1Use@output1@Full_name,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
 				"join1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          {Employee ID} as string,",
-				"          {Survey Date} as string,",
-				"          {Engagement Score} as string,",
-				"          {Satisfaction Score} as string,",
-				"          {Work-Life Balance Score} as string",
-				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
