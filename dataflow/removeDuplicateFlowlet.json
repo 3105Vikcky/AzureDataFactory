@@ -1,7 +1,7 @@
 {
 	"name": "removeDuplicateFlowlet",
 	"properties": {
-		"description": "This is the remove Duplicate flowlate",
+		"description": "This is the remove Duplicate flowlet.",
 		"type": "Flowlet",
 		"typeProperties": {
 			"sources": [],
