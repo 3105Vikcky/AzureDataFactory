@@ -40,7 +40,6 @@
 			"transformations": [
 				{
 					"name": "flowlet1Use",
-					"description": "This flowlet having logic to remove duplicate data",
 					"flowlet": {
 						"referenceName": "flowlet1",
 						"type": "DataFlowReference"
@@ -81,7 +80,8 @@
 				"          Full_name,",
 				"          marks,",
 				"          grade,",
-				"          city",
+				"          city,",
+				"          DOB = rollno",
 				"     ),",
 				"     composition: 'flowlet1') ~> flowlet1Use@(output1)",
 				"pratibhaclgStudent compose(mapColumn(",
