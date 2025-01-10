@@ -33,7 +33,8 @@
 				"     ignoreNoFilesFound: false) ~> asmStudent",
 				"asmStudent aggregate(groupBy(rollno,",
 				"          {} = ERROR_FUNCTION(''),",
-				"          marks,",
+				"          {} = ERROR_FUNCTION(''),",
+				"          {} = ERROR_FUNCTION(''),",
 				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
