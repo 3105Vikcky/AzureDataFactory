@@ -15,7 +15,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "aggregate1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          rollno as string,",
@@ -26,7 +30,11 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> asmStudent"
+				"     ignoreNoFilesFound: false) ~> asmStudent",
+				"asmStudent aggregate(groupBy(rollno,",
+				"          {} = ERROR_FUNCTION(''),",
+				"          marks,",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
 	}
