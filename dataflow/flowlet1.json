@@ -7,6 +7,9 @@
 			"sinks": [],
 			"transformations": [
 				{
+					"name": "aggregate1"
+				},
+				{
 					"name": "input1"
 				}
 			],
@@ -14,10 +17,16 @@
 				"input(output(",
 				"          rollno as string,",
 				"          Full_name as string,",
-				"          {} as string",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
 				"     ),",
 				"     order: 0,",
-				"     allowSchemaDrift: true) ~> input1"
+				"     allowSchemaDrift: true) ~> input1",
+				"input1 aggregate(groupBy(Full_name,",
+				"          marks,",
+				"          grade,",
+				"          {} = ERROR_FUNCTION(''))) ~> aggregate1"
 			]
 		}
 	}
