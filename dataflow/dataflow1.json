@@ -12,6 +12,9 @@
 					},
 					"name": "asmStudent",
 					"description": "This is ASM college student data. "
+				},
+				{
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -44,6 +47,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1",
 				"asmStudent compose(mapColumn(",
 				"          rollno,",
 				"          Full_name,",
