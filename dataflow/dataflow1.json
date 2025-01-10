@@ -16,6 +16,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "asmstudentdataflow",
+						"type": "DatasetReference"
+					},
 					"name": "asmStudentdestination",
 					"description": "After perform some transformation the load the dataset in destination file. "
 				}
@@ -56,6 +60,13 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          rollno as string,",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> asmStudentdestination"
 			]
