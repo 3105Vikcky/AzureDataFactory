@@ -1,0 +1,43 @@
+{
+	"name": "CollegeFlowlets",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "flowletcontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "rollno",
+				"type": "String"
+			},
+			{
+				"name": "Full_name",
+				"type": "String"
+			},
+			{
+				"name": "marks",
+				"type": "String"
+			},
+			{
+				"name": "grade",
+				"type": "String"
+			},
+			{
+				"name": "city",
+				"type": "String"
+			}
+		]
+	}
+}

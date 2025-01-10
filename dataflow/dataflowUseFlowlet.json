@@ -23,6 +23,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "CollegeFlowlets",
+						"type": "DatasetReference"
+					},
 					"name": "sink2"
 				}
 			],
@@ -90,6 +94,13 @@
 				"     broadcast: 'auto')~> join1",
 				"join1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          rollno as string,",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
