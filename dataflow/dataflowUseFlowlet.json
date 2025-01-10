@@ -24,13 +24,6 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText3",
-						"type": "DatasetReference"
-					},
-					"name": "sink1"
-				},
-				{
-					"dataset": {
 						"referenceName": "DelimitedText2",
 						"type": "DatasetReference"
 					},
@@ -51,6 +44,9 @@
 						"referenceName": "flowlet1",
 						"type": "DataFlowReference"
 					}
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -91,24 +87,12 @@
 				"          city",
 				"     ),",
 				"     composition: 'flowlet1') ~> flowlet1@(output1)",
-				"flowlet1Use@output1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          {Employee ID} as string,",
-				"          {Survey Date} as string,",
-				"          {Engagement Score} as string,",
-				"          {Satisfaction Score} as string,",
-				"          {Work-Life Balance Score} as string",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          Full_name,",
-				"          marks,",
-				"          grade,",
-				"          city",
-				"     )) ~> sink1",
-				"flowlet1@output1 sink(allowSchemaDrift: true,",
+				"flowlet1@output1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Employee ID} as string,",
