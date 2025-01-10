@@ -24,7 +24,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "asmstudentdataflow",
+						"referenceName": "DelimitedText3",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -95,11 +95,11 @@
 				"flowlet1Use@output1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          rollno as string,",
-				"          Full_name as string,",
-				"          marks as string,",
-				"          grade as string,",
-				"          city as string",
+				"          {Employee ID} as string,",
+				"          {Survey Date} as string,",
+				"          {Engagement Score} as string,",
+				"          {Satisfaction Score} as string,",
+				"          {Work-Life Balance Score} as string",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",

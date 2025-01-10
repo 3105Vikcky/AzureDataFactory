@@ -1,0 +1,44 @@
+{
+	"name": "DelimitedText3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_college_course",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "output",
+				"container": "destination"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Employee ID",
+				"type": "String"
+			},
+			{
+				"name": "Survey Date",
+				"type": "String"
+			},
+			{
+				"name": "Engagement Score",
+				"type": "String"
+			},
+			{
+				"name": "Satisfaction Score",
+				"type": "String"
+			},
+			{
+				"name": "Work-Life Balance Score",
+				"type": "String"
+			}
+		]
+	}
+}
