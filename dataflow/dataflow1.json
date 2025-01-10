@@ -26,7 +26,7 @@
 			"transformations": [
 				{
 					"name": "flowlet1Use",
-					"description": "This flowlet having logic ",
+					"description": "This flowlet having logic to remove duplicate data",
 					"flowlet": {
 						"referenceName": "flowlet1",
 						"type": "DataFlowReference"
