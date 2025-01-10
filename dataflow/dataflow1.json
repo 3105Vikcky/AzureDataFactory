@@ -14,7 +14,11 @@
 					"description": "This is ASM college student data. "
 				},
 				{
-					"name": "source1"
+					"dataset": {
+						"referenceName": "pratibhaclgstudent",
+						"type": "DatasetReference"
+					},
+					"name": "pratibhaStudent"
 				}
 			],
 			"sinks": [
@@ -48,7 +52,8 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> pratibhaStudent",
 				"asmStudent compose(mapColumn(",
 				"          rollno,",
 				"          Full_name,",
