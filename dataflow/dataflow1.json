@@ -18,6 +18,9 @@
 			"transformations": [
 				{
 					"name": "aggregate1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -36,7 +39,17 @@
 				"          marks,",
 				"          grade,",
 				"          city),",
-				"     count = count()) ~> aggregate1"
+				"     count = count()) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          rollno,",
+				"          Full_name,",
+				"          marks,",
+				"          grade,",
+				"          city,",
+				"          count",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
