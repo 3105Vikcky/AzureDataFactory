@@ -30,6 +30,10 @@
 					"name": "sink1"
 				},
 				{
+					"dataset": {
+						"referenceName": "asmstudentdataflow",
+						"type": "DatasetReference"
+					},
 					"name": "sink2"
 				}
 			],
@@ -105,8 +109,15 @@
 				"          grade,",
 				"          city",
 				"     )) ~> sink1",
-				"flowlet1@output1 sink(allowSchemaDrift: true,",
+				"pratibhaclgStudent sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          rollno as string,",
+				"          Full_name as string,",
+				"          marks as string,",
+				"          grade as string,",
+				"          city as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
