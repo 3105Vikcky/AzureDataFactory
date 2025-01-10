@@ -14,7 +14,7 @@
 					"description": "This is ASM college student data. "
 				},
 				{
-					"name": "pratibhaStudent"
+					"name": "pratibhaclgStudent"
 				}
 			],
 			"sinks": [
@@ -48,7 +48,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> asmStudent",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> pratibhaStudent",
+				"     validateSchema: false) ~> pratibhaclgStudent",
 				"asmStudent compose(mapColumn(",
 				"          rollno,",
 				"          Full_name,",
