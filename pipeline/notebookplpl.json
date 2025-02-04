@@ -13,7 +13,14 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/mca2023.vikasbargal@asmedu.org/first databricks notebook"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksls",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
